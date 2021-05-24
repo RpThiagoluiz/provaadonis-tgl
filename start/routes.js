@@ -15,3 +15,12 @@ Route.post("/sessions", "SessionController.store");
 //Forget Password
 Route.post("/forgetpassword", "ForgotpasswordController.store");
 Route.put("/forgetpassword", "ForgotpasswordController.update");
+
+//Game Routes -> not be tested yet
+Route.post("/game", "GameController.store");
+Route.get("/game", "GameController.index");
+Route.get("/game/:id", "GameController.show");
+Route.put("/game/:id", "GameController.update");
+Route.delete("/game/:id", "GameController.destroy");
+
+//Bets Routes
