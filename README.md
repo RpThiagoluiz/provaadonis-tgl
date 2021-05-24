@@ -1,28 +1,18 @@
-# Adonis API application
+Requisitos Não Funcionais
+RNF01. Construir toda aplicação utilizando Adonis JS
+RNF02. Construir banco de dados com base no JSON (módulo anterior)
+RNF03. Utilizar validators
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+Requisitos Funcionais
+RF01. Disparar email para novos usuários, recuperação de senha e novas apostas (mailtrap)
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+RF02. Login com JWT
 
-## Setup
+**Create Read Update Delete**
+RF03. CRUD de usuários
 
-Use the adonis command to install the blueprint
+RF04.CRUD de jogos
 
-```bash
-adonis new yardstick --api-only
-```
+RF05. CRUD de apostas
 
-or manually clone the repo and then run `npm install`.
-
-
-### Migrations
-
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
-```
+Observação: deve-se construir uma collection no insomnia para ser compartilhado.
