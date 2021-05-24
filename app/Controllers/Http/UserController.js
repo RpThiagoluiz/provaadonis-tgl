@@ -33,14 +33,39 @@ class UserController {
   async store({ request, response }) {
     try {
       const data = request.only(["username", "email", "password"]);
+      const { username, email, password } = data;
+      const isEmptyName = username.trim().length < 3;
+
+      if (isEmptyName) {
+        return response.status(400).send({
+          error: { message: `Username deve conter pelo menos 3 caracteres` },
+        });
+      }
+
+      const regexValidEmail = /^[\w+.]*@\w+.(?:[A-Z]{2,})?.[\w\w]*$/.test(
+        email
+      );
+      const isEmptyEmail = email.trim() === "";
+      if (!regexValidEmail || isEmptyEmail) {
+        return response.status(400).send({
+          error: { message: `Email Invalido !` },
+        });
+      }
+      const isMinChars = password.trim().length >= 6;
+      if (!isMinChars) {
+        return response.status(400).send({
+          error: { message: `Password deve conter mais que 6 caracteres!` },
+        });
+      }
+
       const trx = await Database.beginTransaction();
       const user = await User.create(data, trx);
       await trx.commit();
       return user;
     } catch (error) {
       return response
-        .status(error.status)
-        .send({ error: { message: error.message } });
+        .status(400)
+        .send({ error: { message: `Usuario ou email ja cadastrado` } });
     }
   }
 
@@ -64,13 +89,11 @@ class UserController {
       await user.delete();
       return `Usuario ${params.id} deletado com sucesso!`;
     } catch (error) {
-      return response
-        .status(error.status)
-        .send({
-          error: {
-            message: `Erro ao deletar o usuario, olhe a lista para conferir se esse id existe.`,
-          },
-        });
+      return response.status(error.status).send({
+        error: {
+          message: `Erro ao deletar o usuario, olhe a lista para conferir se esse id existe.`,
+        },
+      });
     }
   }
 }
