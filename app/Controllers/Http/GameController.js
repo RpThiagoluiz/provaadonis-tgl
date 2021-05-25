@@ -26,12 +26,14 @@ class GameController {
         "min-cart-value",
       ]);
 
+      //const trx = await Database.beginTransaction();
       const createGame = await Game.create({ ...data });
+      //await trx.commit();
       return createGame;
     } catch (error) {
       return response
         .status(error.status)
-        .send({ error: { message: error.message } });
+        .send({ error: { message: `Game ja cadastrado` } });
     }
   }
 

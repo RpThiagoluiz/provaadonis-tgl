@@ -16,11 +16,20 @@ Route.post("/sessions", "SessionController.store");
 Route.post("/forgetpassword", "ForgotpasswordController.store");
 Route.put("/forgetpassword", "ForgotpasswordController.update");
 
-//Game Routes -> not be tested yet
-Route.post("/game", "GameController.store");
-Route.get("/game", "GameController.index");
-Route.get("/game/:id", "GameController.show");
-Route.put("/game/:id", "GameController.update");
-Route.delete("/game/:id", "GameController.destroy");
+Route.group(() => {
+  //Game Routes -> not be tested yet
+  Route.post("/game", "GameController.store");
+  Route.get("/game", "GameController.index");
+  Route.get("/game/:id", "GameController.show");
+  Route.put("/game/:id", "GameController.update");
+  Route.delete("/game/:id", "GameController.destroy");
 
-//Bets Routes
+  //Bets Routes
+  Route.post("/bets", "BetController.store");
+  Route.get("/bets", "BetController.index");
+  Route.get("/bets/:id", "BetController.show");
+  Route.put("/bets/:id", "BetController.update");
+  Route.delete("/bets/:id", "BetController.destroy");
+}).middleware(["auth"]);
+
+//Route.resource('game', "GameController").apiOnly()

@@ -16,3 +16,9 @@ RF04.CRUD de jogos
 RF05. CRUD de apostas
 
 Observação: deve-se construir uma collection no insomnia para ser compartilhado.
+
+### Make
+
+Bets - Controllers
+Relation database game, users, bets
+Validators
