@@ -2,6 +2,7 @@
 
 const Database = use("Database");
 const User = use("App/Models/User");
+const Mail = use("Mail");
 
 class UserController {
   async index({ response }) {
@@ -61,6 +62,22 @@ class UserController {
       const trx = await Database.beginTransaction();
       const user = await User.create(data, trx);
       await trx.commit();
+
+      //Email to new user
+      await Mail.send(
+        ["emails.user", "emails.user-txt"],
+        {
+          name: username,
+          link: `http://localhost:3000/session`,
+        },
+        (message) => {
+          message
+            .to(email)
+            .from("admin@thi.com", "Admin | TGL")
+            .subject("Bem vindo!");
+        }
+      );
+
       return user;
     } catch (error) {
       return response

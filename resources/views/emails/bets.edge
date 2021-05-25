@@ -1,0 +1,14 @@
+<strong> Ola, {{name}}!</strong>
+
+<p>Suas Bets foram realizadas com sucesso!</p>
+
+@each(game in games)
+<p> Jogo = {{game.type}} </p>
+<p> Números = {{game.numbers}} </p>
+<p> Preço = {{game.price}} </p>
+
+@endeach
+
+<small> R$ {{total}} </small>
+
+<span> Boa Sorte 🎉🎉🎉</span>

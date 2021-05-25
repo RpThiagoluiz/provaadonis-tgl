@@ -11,6 +11,8 @@ const Mail = use("Mail");
 class BetController {
   async index({ request, response, auth }) {
     try {
+      //Can try for type
+
       const bets = await Bet.query()
         .where({ user_id: auth.user.id })
         .with("game")
@@ -33,6 +35,7 @@ class BetController {
       //Map ?
 
       const userGames = [];
+      const formatedGames = [];
 
       for (let index = 0; index < cart.length; index++) {
         //Check Cart - ifs
@@ -41,7 +44,6 @@ class BetController {
         //   numbers: cart[i].numbers,
         // });
         const game = await Game.findByOrFail({ id: cart[index].game_id });
-        console.log(game);
         if (totalPrice < game["min-cart-value"]) {
           return response.status(400).send({
             error: {
@@ -49,13 +51,36 @@ class BetController {
             },
           });
         }
+        //if(game["max-number"]) -> limpar e tratar o campo de numbers,
+
         const userBets = { ...cart[index], user_id: auth.user.id };
         userGames.push(userBets);
+
+        //Format userGames for e-mail
+        formatedGames.push({
+          type: game.type,
+          numbers: cart[index].numbers,
+          price: cart[index].price,
+        });
       }
 
       const recentBets = await Bet.createMany(userGames);
 
       //Send Email for Bets
+      await Mail.send(
+        ["emails.bets", "emails.bets-txt"],
+        {
+          name: user.name,
+          games: formatedGames,
+          total: totalPrice, //formatar o valor
+        },
+        (message) => {
+          message
+            .to(user.email)
+            .from("admin@thi.com", "Admin | TGL")
+            .subject("Nova Bet Realizada");
+        }
+      );
 
       return recentBets;
     } catch (error) {
@@ -69,6 +94,7 @@ class BetController {
     try {
       const bet = await Bet.findOrFail(params.id);
       await bet.load("game");
+      await bet.load("user");
       return bet;
     } catch (error) {
       return response.status(error.status).send({

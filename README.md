@@ -1,24 +1,13 @@
-Requisitos Não Funcionais
-RNF01. Construir toda aplicação utilizando Adonis JS
-RNF02. Construir banco de dados com base no JSON (módulo anterior)
 RNF03. Utilizar validators
-
-Requisitos Funcionais
-RF01. Disparar email para novos usuários, recuperação de senha e novas apostas (mailtrap)
-
-RF02. Login com JWT
-
-**Create Read Update Delete**
-RF03. CRUD de usuários
-
-RF04.CRUD de jogos
-
-RF05. CRUD de apostas
-
+RF01. Disparar email para novos usuários, recuperação de senha e novas apostas (mailtrap) -> Somente recuperacao por enquanto
 Observação: deve-se construir uma collection no insomnia para ser compartilhado.
 
-### Make
+**_ Concluido _**
 
-Bets - Controllers
-Relation database game, users, bets
-Validators
+_RNF01. Construir toda aplicação utilizando Adonis JS_
+_RNF02. Construir banco de dados com base no JSON (módulo anterior)_
+
+_RF02. Login com JWT_
+_RF03. CRUD de usuários_
+_RF04.CRUD de jogos_
+_RF05. CRUD de apostas_
