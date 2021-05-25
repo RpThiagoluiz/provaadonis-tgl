@@ -21,6 +21,8 @@ const providers = [
   "@adonisjs/mail/providers/MailProvider",
   //Views -> Email model
   "@adonisjs/framework/providers/ViewProvider",
+  //Validators
+  "@adonisjs/validator/providers/ValidatorProvider",
 ];
 
 /*
