@@ -18,7 +18,8 @@ class UserController {
 
   async show({ response, params, auth }) {
     try {
-      const user = await User.findByOrFail("id", auth.user.id);
+      // const user = await User.findByOrFail("id", auth.user.id);
+      const user = await User.findOrFail(params.id);
       // const user = await User.findOrFail(params.id) | or just for parms in Route;
 
       //Await for auth user, when, load this user game
