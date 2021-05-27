@@ -1,5 +1,5 @@
 "use strict";
-
+const Antl = use("Antl");
 class CreateBet {
   get validateAll() {
     return true;
@@ -9,6 +9,9 @@ class CreateBet {
       cart: "required",
       totalPrice: "required",
     };
+  }
+  get messages() {
+    return Antl.list("validation");
   }
 }
 

@@ -1,5 +1,5 @@
 "use strict";
-
+const Antl = use("Antl");
 class UpdateBet {
   get validateAll() {
     return true;
@@ -8,6 +8,9 @@ class UpdateBet {
     return {
       numbers: "required",
     };
+  }
+  get messages() {
+    return Antl.list("validation");
   }
 }
 

@@ -1,5 +1,5 @@
 "use strict";
-
+const Antl = use("Antl");
 class CreateGame {
   get validateAll() {
     return true;
@@ -14,6 +14,9 @@ class CreateGame {
       color: "required",
       ["min-cart-value"]: "required",
     };
+  }
+  get messages() {
+    return Antl.list("validation");
   }
 }
 

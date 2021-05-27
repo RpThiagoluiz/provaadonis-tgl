@@ -44,6 +44,18 @@ class BetController {
         //   numbers: cart[i].numbers,
         // });
         const game = await Game.findByOrFail({ id: cart[index].game_id });
+        const mapNumbers = cart[index].numbers;
+        const duplicate = new Set(mapNumbers);
+        const changeStringBetNumbersInNumber = mapNumbers.map((el) =>
+          Number(el)
+        );
+        const maxNumber = changeStringBetNumbersInNumber.reduce((a, b) =>
+          Math.max(a, b)
+        ); //MaxNumber
+        const minNumber = changeStringBetNumbersInNumber.reduce((a, b) =>
+          Math.min(a, b)
+        );
+
         if (totalPrice < game["min-cart-value"]) {
           return response.status(400).send({
             error: {
@@ -51,7 +63,38 @@ class BetController {
             },
           });
         }
-        //if(game["max-number"]) -> limpar e tratar o campo de numbers,
+
+        if (game["max-number"] !== mapNumbers.length) {
+          return response.status(400).send({
+            error: {
+              message: `Quantidade de numeros incorreta, ${game["max-number"]}`,
+            },
+          });
+        }
+
+        if (maxNumber > game.range) {
+          return response.status(400).send({
+            error: {
+              message: `O maior valor valido para esse game ${game.type} é ${game.range}`,
+            },
+          });
+        }
+
+        if (minNumber <= 0) {
+          return response.status(400).send({
+            error: {
+              message: `O menor valor valido para todos os games é 1`,
+            },
+          });
+        }
+
+        if (mapNumbers.length !== duplicate.size) {
+          return response.status(400).send({
+            error: {
+              message: `Numeros duplicados no game, ${game.type} - ${mapNumbers}`,
+            },
+          });
+        }
 
         const userBets = { ...cart[index], user_id: auth.user.id };
         userGames.push(userBets);
@@ -59,6 +102,7 @@ class BetController {
         //Format userGames for e-mail
         formatedGames.push({
           type: game.type,
+          color: game.color,
           numbers: cart[index].numbers,
           price: cart[index].price,
         });
@@ -70,7 +114,7 @@ class BetController {
       await Mail.send(
         ["emails.bets", "emails.bets-txt"],
         {
-          name: user.name,
+          name: user.username,
           games: formatedGames,
           total: totalPrice, //formatar o valor
         },
