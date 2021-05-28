@@ -22,7 +22,7 @@ class WelcomeUserMail {
       ["emails.user", "emails.user-txt"],
       {
         name: username,
-        link: `http://localhost:3000/session`,
+        link: `http://localhost:3000/`,
       },
       (message) => {
         message

@@ -19,12 +19,9 @@ class ForgotpasswordController {
       await Mail.send(
         ["emails.forgot_password", "emails.forgot_password-txt"],
         {
-          // const go to html.
           email,
 
-          //link: `${request.input("redirect_url")}?token=${user.token}`
-          //This away, when user send, frontend turn request url for redirect him.
-          link: `http://localhost:3000/resetpassword?token=${user.token}`,
+          link: `http://localhost:3000/resetpassword/${user.token}`,
         },
         (message) => {
           message
@@ -63,6 +60,20 @@ class ForgotpasswordController {
       user.password = password;
 
       await user.save();
+
+      await Mail.send(
+        ["emails.reset_password.edge", "emails.reset_password.edge-txt"],
+        {
+          user,
+          link: `http://localhost:3000/`,
+        },
+        (message) => {
+          message
+            .to(user.email)
+            .from("admin@thi.com", "Admin | TGL")
+            .subject("Senha Atualizada");
+        }
+      );
       return response
         .status(200)
         .send({ success: { message: "Senha atualizada com sucesso!" } });

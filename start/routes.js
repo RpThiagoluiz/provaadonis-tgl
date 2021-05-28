@@ -20,6 +20,7 @@ Route.put("/forgetpassword", "ForgotpasswordController.update").validator(
   "ResetPassword"
 );
 
+//Route.get("/game", "GameController.index");
 Route.group(() => {
   //Game Routes -> not be tested yet
   Route.post("/game", "GameController.store").validator("CreateGame");
