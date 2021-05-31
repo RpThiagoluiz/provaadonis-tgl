@@ -5,8 +5,7 @@ const Route = use("Route");
 //User Route
 Route.post("/users", "UserController.store").validator("User");
 Route.get("/users", "UserController.index");
-Route.get("/users/:id", "UserController.show");
-Route.put("/users/:id", "UserController.update");
+
 Route.delete("/users/:id", "UserController.destroy");
 
 //Sessions
@@ -22,6 +21,9 @@ Route.put("/forgetpassword", "ForgotpasswordController.update").validator(
 
 //Route.get("/game", "GameController.index");
 Route.group(() => {
+  //User
+  Route.get("/users/:id", "UserController.show");
+  Route.put("/users/:id", "UserController.update");
   //Game Routes -> not be tested yet
   Route.post("/game", "GameController.store").validator("CreateGame");
   Route.get("/game", "GameController.index");

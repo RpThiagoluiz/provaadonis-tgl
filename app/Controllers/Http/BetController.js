@@ -38,13 +38,9 @@ class BetController {
       const formatedGames = [];
 
       for (let index = 0; index < cart.length; index++) {
-        //Check Cart - ifs
-        // const user = await Bet.findBy({
-        //   user_id: cart[i].user_id,
-        //   numbers: cart[i].numbers,
-        // });
         const game = await Game.findByOrFail({ id: cart[index].game_id });
-        const mapNumbers = cart[index].numbers;
+        const mapNumbers = cart[index].numbers.split(",");
+
         const duplicate = new Set(mapNumbers);
         const changeStringBetNumbersInNumber = mapNumbers.map((el) =>
           Number(el)
